@@ -1,0 +1,20 @@
+language,movie_count,mean_rating_drift,mean_cosine_dist,mean_word_jaccard_dist
+English,93,0.0361,0.1632,0.741
+Japanese,32,0.0426,0.1441,0.7413
+French,14,-0.0174,0.1753,0.7445
+Russian,10,-0.0234,0.1422,0.748
+Italian,8,0.0872,0.1668,0.7545
+No spoken language,4,-0.0922,0.132,0.7366
+German,4,-0.148,0.2186,0.7488
+Korean,4,0.1502,0.162,0.7402
+Swedish,3,-0.1173,0.1539,0.7465
+Cantonese,3,0.1007,0.1874,0.7577
+Persian (Farsi),2,-0.0045,0.1574,0.7655
+Serbian,1,0.196,0.2084,0.7718
+Portuguese,1,0.25,0.2536,0.7444
+Arabic,1,0.049,0.1402,0.7409
+"Bengali, Bangla",1,-0.19,0.0764,0.6992
+Greek (modern),1,-0.259,0.2288,0.7822
+Czech,1,-0.064,0.1413,0.7557
+Chinese,1,-0.074,0.112,0.7192
+Hungarian,1,-0.051,0.3177,0.7748

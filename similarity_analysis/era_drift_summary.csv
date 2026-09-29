@@ -1,0 +1,4 @@
+era,movie_count,mean_rating_drift,mean_cosine_dist,mean_word_jaccard_dist,mean_word_count_drift
+Modern Era (2000-2024),53,0.071,0.2057,0.7513,-18.0509
+Classic Era (1970-1999),64,0.0476,0.1549,0.7434,-39.1891
+Golden Era (Pre-1970),68,-0.0358,0.133,0.7368,-51.6118

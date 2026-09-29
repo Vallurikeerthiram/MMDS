@@ -1,0 +1,5 @@
+Metric,Representation,Similarity,Distance,Interpretation
+Character 3-Shingle Jaccard,Substrings (k=3),0.2193,0.7807,"Captures sub-word morphology; shared roots like 'sam', 'ura', 'bla', 'whi'."
+Word 2-Shingle Jaccard,Word pairs (k=2),0.0161,0.9839,Very low phrasing overlap; reviewers structure sentences completely differently.
+Word-Level Jaccard,Bag of unique words,0.1329,0.8671,"Lexical divergence (88.7% distance); 2012 uses formal analysis, 2024 uses modern slang."
+TF-IDF Cosine Metric,L2-normalized vectors,0.1375,0.8625,High semantic distance (0.8625); different thematic emphasis despite same 5.0* rating.
