@@ -64,26 +64,51 @@ The dataset was constructed by joining and cleaning two public Letterboxd corpor
 * **Part D: Stream & Link Analysis:**
   * *Stream Processing:* Modeling incoming reviews over `review_date` as a continuous data stream, applying Reservoir Sampling and Bloom filters to detect burst sentiment shifts.
   * *Network Link Analysis:* Constructing a multi-partite graph connecting Countries $\leftrightarrow$ Eras $\leftrightarrow$ Genres, applying PageRank/HITS to identify structural cultural hubs over time.
-* **Part E: Pattern Discovery:**
-  * *Market Basket Analysis / Frequent Itemsets (Apriori):* Mining co-occurring pattern shifts (e.g., `{Era: 1960s, Country: Japan} $\Rightarrow$ {Genre: History}`).
-  * *Clustering / Dimensionality Reduction:* Grouping films and viewing cohorts via BFR/CURE and SVD to uncover latent cinematic eras.
+* **Part E: Pattern Discovery (Recommendation Systems & Clustering):**
+  * *Option 2: Multi-Decade Temporal Trajectory Alignment (TTA) Item-Item CF:*
+    * **Decade $X$ Release Context:** Proximity matching on release era $X_A, X_B$ to preserve cinematic golden-age origins.
+    * **Decade $Y$ and $Z$ Reception Alignment:** Evaluating audience review sentiment and textual similarity across distinct watch eras (2010s vs 2020s).
+    * **Trajectory Consistency Bonus & Decay:** Pairs with matching reception across both decades receive maximum confidence multipliers ("Permanent Multi-Decade Twins"), while pairs with modern-only similarity receive recency-weighted recommendations with reduced multiplier ("Modern Emerging Convergence").
+    * **Deliverables:** [`recommendation_system/recommendation_engine.py`](file:///c:/Users/keert/OneDrive%20-%20Amrita%20vishwa%20vidyapeetham/Amrita/Sem7/Projects/MMDS/recommendation_system/recommendation_engine.py), [`temporal_item_recommendations.xlsx`](file:///c:/Users/keert/OneDrive%20-%20Amrita%20vishwa%20vidyapeetham/Amrita/Sem7/Projects/MMDS/recommendation_system/temporal_item_recommendations.xlsx).
+  * *Option 3: Advanced Multimodal Clustering & BFR/CURE Applicability:*
+    * **Multimodal Feature Space:** Standardized 30-dimensional space spanning release year, runtime, ratings, one-hot genres/countries, and latent review text SVD axes.
+    * **Multi-Level Partitions:** 185 unique catalogued films grouped into 3 macro-cinematic cohorts ($k=3$, Silhouette: 0.1574); 2,500 review records grouped into 4 audience reception typologies.
+    * **BFR Streaming Simulation:** Achieved **9.64× memory compression** using Discard (DS), Compressed (CS), and Retained Sets (RS) with Mahalanobis distance.
+    * **CURE Geometry Simulation:** Employed shrunk representative points ($\alpha = 0.20, c=4$) to model non-spherical clusters and eliminate outlier sensitivity.
+    * **Deliverables:** [`clustering/clustering_engine.py`](file:///c:/Users/keert/OneDrive%20-%20Amrita%20vishwa%20vidyapeetham/Amrita/Sem7/Projects/MMDS/clustering/clustering_engine.py), [`clustering_results.xlsx`](file:///c:/Users/keert/OneDrive%20-%20Amrita%20vishwa%20vidyapeetham/Amrita/Sem7/Projects/MMDS/clustering/clustering_results.xlsx), [`bfr_cure_applicability_analysis.md`](file:///c:/Users/keert/OneDrive%20-%20Amrita%20vishwa%20vidyapeetham/Amrita/Sem7/Projects/MMDS/clustering/bfr_cure_applicability_analysis.md).
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-├── data/
+├── data/                                  # Curated raw, intermediate & gold-standard datasets
 │   ├── letterboxd_final_dataset.csv       # Final clean dataset (61,786 rows, 17 cols)
-│   ├── letterboxd_final_dataset.parquet   # Optimized columnar storage
+│   ├── letterboxd_final_dataset.parquet   # Optimized columnar storage (Snappy)
 │   ├── letterboxd_cleaned_dataset.csv     # Intermediate cleaned dataset
 │   ├── letterboxd_unified_dataset.csv     # Raw merged dataset
-│   └── letterboxd_movies_dataset.csv      # Catalog metadata (16k+ films)
-├── scripts/
+│   ├── letterboxd_movies_dataset.csv      # Catalog metadata (16k+ films)
+│   └── README.md                          # Data schema & attribute documentation
+├── similarity_analysis/                   # Part C: LSH & Shingling
+│   ├── similarity_analysis.py             # 4-shingle MinHash LSH collision pipeline
+│   ├── complete_movie_pairwise_similarity_analysis.xlsx # LSH results & S-curves
+│   └── README.md                          # Similarity methodology documentation
+├── recommendation_system/                 # Part E (Option 2): Temporal CF Recommender
+│   ├── recommendation_engine.py           # Multi-Decade Temporal Trajectory engine
+│   ├── temporal_item_recommendations.xlsx # Generated multi-sheet recommendations & utility matrix
+│   └── README.md                          # Recommender algorithm documentation
+├── clustering/                            # Part E (Option 3): Clustering & BFR/CURE
+│   ├── clustering_engine.py               # K-Means, BFR stream simulation & CURE model
+│   ├── clustering_results.xlsx            # Multi-sheet clustering deliverables & benchmarks
+│   ├── bfr_cure_applicability_analysis.md # Comprehensive technical analysis & report
+│   └── README.md                          # Clustering methodology documentation
+├── scripts/                               # Data processing, cleaning & diagnostic scripts
 │   ├── consolidate_datasets.py            # Initial merge and title normalization
 │   ├── clean_final_dataset.py             # Pruning scraper artifacts & text normalization
 │   ├── column_profile.py                  # Distinct counts and range profiler
-│   └── check_user_rows.py                 # Data audit & verification utilities
+│   ├── audit_empty_cells.py               # Null and empty string scanner
+│   ├── test_temporal_similarity.py        # Micro-benchmarks for temporal pairs
+│   └── README.md                          # Script inventory documentation
 ├── Assignment Pattern.docx                # Academic assignment specification
-└── README.md                              # Project documentation
+└── README.md                              # Main project documentation
 ```
