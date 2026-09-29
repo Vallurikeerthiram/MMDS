@@ -201,13 +201,14 @@ def main():
         })
 
     master_df = pd.DataFrame(rows)
+    
+    # Sort strictly by movie_name, then review_1_date, then review_2_date
+    master_df['r1_dt'] = pd.to_datetime(master_df['review_1_date'])
+    master_df['r2_dt'] = pd.to_datetime(master_df['review_2_date'])
+    master_df = master_df.sort_values(by=['movie_name', 'r1_dt', 'r2_dt'], ascending=[True, True, True]).reset_index(drop=True)
+    master_df = master_df.drop(columns=['r1_dt', 'r2_dt'])
 
-    # 1. Save master CSV
-    csv_path = os.path.join(script_dir, 'complete_movie_pairwise_similarity_analysis.csv')
-    master_df.to_csv(csv_path, index=False)
-    print(f"[OK] Master CSV saved: {csv_path} ({len(master_df)} movies)")
-
-    # 2. Build multi-sheet Excel
+    # Build multi-sheet Excel workbook
     excel_path = os.path.join(script_dir, 'complete_movie_pairwise_similarity_analysis.xlsx')
     
     # Genre sheet
